@@ -1033,11 +1033,15 @@
     if (next) next.addEventListener('click', function(){ goTo(current + 1); });
     dots.forEach(function(d){ d.addEventListener('click', function(){ goTo(+d.dataset.idx); }); });
 
-    // Auto-advance every 5 seconds
-    var autoTimer = setInterval(function(){
-      goTo(current >= maxIdx ? 0 : current + 1);
-    }, 5000);
+    // Auto-advance every 4 seconds
+    function startAuto() {
+      return setInterval(function(){
+        goTo(current >= maxIdx ? 0 : current + 1);
+      }, 4000);
+    }
+    var autoTimer = startAuto();
     track.addEventListener('mouseenter', function(){ clearInterval(autoTimer); });
+    track.addEventListener('mouseleave', function(){ autoTimer = startAuto(); });
 
     // Touch/swipe support
     var touchStartX = 0;
