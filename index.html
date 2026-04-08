@@ -964,7 +964,7 @@
   })();
 
   // ── News Slider ────────────────────────────────────────────────
-  (function(){
+  window.addEventListener('load', function(){
     var track = document.getElementById('news-track');
     var dots  = document.querySelectorAll('.news-dot');
     var prev  = document.getElementById('news-prev');
@@ -979,12 +979,20 @@
 
     function getCardW() {
       if (!cards[0]) return 0;
-      return cards[0].offsetWidth + 24; // card width + gap
+      return cards[0].offsetWidth + 24; // card width + gap (1.5rem)
     }
 
-    function goTo(idx) {
+    // instant=true → kein Slide-Animation (für den Loop-Sprung zurück)
+    function goTo(idx, instant) {
       current = Math.max(0, Math.min(idx, maxIdx));
+      if (instant) {
+        track.style.transition = 'none';
+      }
       track.style.transform = 'translateX(-' + (current * getCardW()) + 'px)';
+      if (instant) {
+        track.offsetWidth; // reflow erzwingen
+        track.style.transition = '';
+      }
       dots.forEach(function(d,i){ d.classList.toggle('active', i === current); });
       if (prev) prev.disabled = current === 0;
       if (next) next.disabled = current >= maxIdx;
@@ -994,15 +1002,21 @@
     if (next) next.addEventListener('click', function(){ goTo(current + 1); });
     dots.forEach(function(d){ d.addEventListener('click', function(){ goTo(+d.dataset.idx); }); });
 
-    // Auto-advance every 4 seconds (infinite loop)
+    // Auto-advance alle 4 Sekunden – nahtloser Loop (kein Zurückgleiten)
     function startAuto() {
-      return setInterval(function(){ goTo(current >= maxIdx ? 0 : current + 1); }, 4000);
+      return setInterval(function(){
+        if (current >= maxIdx) {
+          goTo(0, true); // sofortiger Reset ohne Slide-Animation
+        } else {
+          goTo(current + 1);
+        }
+      }, 4000);
     }
     var autoTimer = startAuto();
     track.addEventListener('mouseenter', function(){ clearInterval(autoTimer); });
     track.addEventListener('mouseleave', function(){ autoTimer = startAuto(); });
 
-    // Touch/swipe support
+    // Touch/Swipe
     var touchStartX = 0;
     track.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].clientX; }, {passive:true});
     track.addEventListener('touchend', function(e){
@@ -1017,7 +1031,7 @@
     });
 
     goTo(0);
-  })();
+  });
 
 </script>
 
