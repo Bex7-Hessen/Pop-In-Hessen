@@ -655,28 +655,7 @@
 
   
     
-    /* ─── Hero Reveal on Hover ─── */
-    .hero-text-hidden {
-      opacity: 0 !important;
-      transform: translateY(16px) !important;
-      pointer-events: none !important;
-      transition: opacity 0.7s ease, transform 0.7s ease !important;
-    }
-    .hero-text-visible {
-      opacity: 1 !important;
-      transform: translateY(0) !important;
-      pointer-events: auto !important;
-      transition: opacity 0.7s ease, transform 0.7s ease !important;
-    }
-    .hero-logo-big .hero-logo-link {
-      transform: scale(calc(var(--logo-scroll-scale) * 1.4)) !important;
-      transition: transform 0.7s cubic-bezier(0.34,1.56,0.64,1) !important;
-    }
-    .hero-logo-big .hero-logo-link:hover {
-      transform: scale(calc(var(--logo-scroll-scale) * 1.44)) !important;
-    }
-
-  </style>
+    </style>
 </head>
 <body>
 
@@ -709,6 +688,7 @@
 
   <div class="hero-content">
     <div class="hero-eyebrow">
+      <div id="hero-scale-wrap" style="display:inline-block;transform:scale(1.45);transform-origin:left center;transition:transform 0.75s cubic-bezier(0.34,1.56,0.64,1);">
       <div class="hero-logo-flybox">
       <a href="#" class="hero-logo-link" aria-label="Pop in Hessen">
         <svg class="hero-logo-svg" viewBox="0 0 633 72" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -717,6 +697,7 @@
           <path d="M446.058 29.1648C445.105 29.1648 444.292 28.8283 443.619 28.1552C442.945 27.4822 442.609 26.6689 442.609 25.7154C442.609 24.762 442.945 23.9487 443.619 23.2757C444.292 22.5746 445.105 22.2241 446.058 22.2241C447.068 22.2241 447.909 22.5606 448.582 23.2336C449.283 23.9067 449.634 24.7339 449.634 25.7154C449.634 26.6689 449.283 27.4822 448.582 28.1552C447.881 28.8283 447.04 29.1648 446.058 29.1648ZM443.534 53.6045V31.899H448.54V53.6045H443.534ZM465.648 31.6466C468.116 31.6466 470.065 32.4318 471.495 34.0022C472.925 35.5727 473.64 37.8161 473.64 40.7326V53.6045H468.634V41.1533C468.634 39.8352 468.2 38.7556 467.33 37.9143C466.489 37.0449 465.423 36.6103 464.133 36.6103C462.871 36.6103 461.806 37.059 460.936 37.9563C460.067 38.8257 459.632 39.9334 459.632 41.2795V53.6045H454.627V31.899H459.506V34.8435C460.123 33.862 460.979 33.0908 462.072 32.53C463.194 31.9411 464.386 31.6466 465.648 31.6466ZM516.627 23.3177V53.6045H511.622V40.985H496.857V53.6045H491.851V23.3177H496.857V35.9372H511.622V23.3177H516.627ZM526.732 44.1819C526.928 45.7243 527.489 46.9863 528.414 47.9678C529.368 48.9213 530.672 49.398 532.327 49.398C533.504 49.398 534.472 49.1176 535.229 48.5567C535.986 47.9678 536.491 47.3088 536.743 46.5796H541.833C541.693 47.449 541.286 48.4445 540.613 49.5663C539.94 50.688 538.903 51.6835 537.501 52.5529C536.126 53.4222 534.402 53.8569 532.327 53.8569C530.279 53.8569 528.429 53.3801 526.774 52.4267C525.119 51.4452 523.829 50.1131 522.904 48.4305C521.979 46.7479 521.516 44.855 521.516 42.7517C521.516 40.7046 521.979 38.8397 522.904 37.1571C523.857 35.4465 525.133 34.1004 526.732 33.1189C528.358 32.1374 530.153 31.6466 532.116 31.6466C533.995 31.6466 535.706 32.1374 537.248 33.1189C538.791 34.1004 539.996 35.4324 540.866 37.115C541.763 38.7976 542.212 40.6345 542.212 42.6255C542.212 43.1023 542.184 43.6211 542.128 44.1819H526.732ZM532.116 36.1055C530.686 36.1055 529.522 36.5261 528.625 37.3674C527.727 38.2087 527.153 39.3164 526.9 40.6906H537.122C536.87 39.3164 536.309 38.2087 535.439 37.3674C534.598 36.5261 533.49 36.1055 532.116 36.1055ZM550.548 46.3693C550.604 47.2948 550.955 48.0519 551.599 48.6408C552.244 49.2297 553.072 49.5242 554.081 49.5242C554.979 49.5242 555.708 49.3139 556.269 48.8932C556.858 48.4726 557.152 47.9117 557.152 47.2106C557.152 46.5937 556.914 46.1169 556.437 45.7804C555.988 45.4159 555.231 45.1074 554.165 44.855L551.599 44.224C547.898 43.3266 546.047 41.2514 546.047 37.9984C546.047 36.7925 546.383 35.7129 547.056 34.7594C547.73 33.7779 548.669 33.0207 549.875 32.4879C551.081 31.927 552.441 31.6466 553.955 31.6466C555.441 31.6466 556.745 31.9971 557.867 32.6982C559.017 33.3713 559.9 34.2546 560.517 35.3483C561.162 36.414 561.485 37.5217 561.485 38.6714H556.942C556.886 37.8021 556.577 37.101 556.016 36.5682C555.455 36.0073 554.74 35.7269 553.871 35.7269C553.002 35.7269 552.301 35.9372 551.768 36.3579C551.263 36.7785 551.011 37.3113 551.011 37.9563C551.011 38.9379 551.67 39.5829 552.988 39.8913L555.806 40.5644C557.881 41.0411 559.438 41.8403 560.475 42.9621C561.541 44.0558 562.074 45.3878 562.074 46.9582C562.074 49.0334 561.302 50.702 559.76 51.964C558.246 53.2259 556.283 53.8569 553.871 53.8569C552.132 53.8569 550.632 53.4923 549.37 52.7632C548.108 52.0341 547.155 51.0946 546.51 49.9448C545.865 48.7951 545.528 47.6032 545.5 46.3693H550.548Z M570.306 46.3693 C570.363 47.2948 570.713 48.0519 571.358 48.6408 C572.003 49.2297 572.830 49.5242 573.840 49.5242 C574.737 49.5242 575.466 49.3139 576.027 48.8932 C576.616 48.4726 576.911 47.9117 576.911 47.2106 C576.911 46.5937 576.672 46.1169 576.196 45.7804 C575.747 45.4159 574.990 45.1074 573.924 44.8550 L571.358 44.2240 C567.656 43.3266 565.806 41.2514 565.806 37.9984 C565.806 36.7925 566.142 35.7129 566.815 34.7594 C567.488 33.7779 568.428 33.0207 569.633 32.4879 C570.839 31.9270 572.199 31.6466 573.714 31.6466 C575.200 31.6466 576.504 31.9971 577.626 32.6982 C578.776 33.3713 579.659 34.2546 580.276 35.3483 C580.921 36.4140 581.243 37.5217 581.243 38.6714 H576.700 C576.644 37.8021 576.336 37.1010 575.775 36.5682 C575.214 36.0073 574.499 35.7269 573.630 35.7269 C572.760 35.7269 572.059 35.9372 571.526 36.3579 C571.022 36.7785 570.769 37.3113 570.769 37.9563 C570.769 38.9379 571.428 39.5829 572.746 39.8913 L575.565 40.5644 C577.640 41.0411 579.196 41.8403 580.234 42.9621 C581.299 44.0558 581.832 45.3878 581.832 46.9582 C581.832 49.0334 581.061 50.7020 579.519 51.9640 C578.004 53.2259 576.041 53.8569 573.630 53.8569 C571.891 53.8569 570.391 53.4923 569.129 52.7632 C567.867 52.0341 566.913 51.0946 566.268 49.9448 C565.623 48.7951 565.287 47.6032 565.259 46.3693 H570.306 Z M590.487 44.1819C590.683 45.7243 591.244 46.9863 592.169 47.9678C593.123 48.9213 594.427 49.398 596.081 49.398C597.259 49.398 598.226 49.1176 598.984 48.5567C599.741 47.9678 600.246 47.3088 600.498 46.5796H605.588C605.448 47.449 605.041 48.4445 604.368 49.5663C603.695 50.688 602.657 51.6835 601.255 52.5529C599.881 53.4222 598.156 53.8569 596.081 53.8569C594.034 53.8569 592.183 53.3801 590.529 52.4267C588.874 51.4452 587.584 50.1131 586.659 48.4305C585.733 46.7479 585.27 44.855 585.27 42.7517C585.27 40.7046 585.733 38.8397 586.659 37.1571C587.612 35.4465 588.888 34.1004 590.487 33.1189C592.113 32.1374 593.908 31.6466 595.871 31.6466C597.75 31.6466 599.46 32.1374 601.003 33.1189C602.545 34.1004 603.751 35.4324 604.62 37.115C605.518 38.7976 605.966 40.6345 605.966 42.6255C605.966 43.1023 605.938 43.6211 605.882 44.1819H590.487ZM595.871 36.1055C594.441 36.1055 593.277 36.5261 592.379 37.3674C591.482 38.2087 590.907 39.3164 590.655 40.6906H600.877C600.624 39.3164 600.063 38.2087 599.194 37.3674C598.353 36.5261 597.245 36.1055 595.871 36.1055ZM621.337 31.6466C623.805 31.6466 625.754 32.4318 627.184 34.0022C628.614 35.5727 629.33 37.8161 629.33 40.7326V53.6045H624.324V41.1533C624.324 39.8352 623.889 38.7556 623.02 37.9143C622.179 37.0449 621.113 36.6103 619.823 36.6103C618.561 36.6103 617.495 37.059 616.626 37.9563C615.757 38.8257 615.322 39.9334 615.322 41.2795V53.6045H610.316V31.899H615.196V34.8435C615.813 33.862 616.668 33.0908 617.762 32.53C618.883 31.9411 620.075 31.6466 621.337 31.6466Z" fill="currentColor"/>
         </svg>
       </a>
+      </div>
       </div>
     </div>
 
@@ -727,12 +708,12 @@
     </h1>
 
     <div class="hero-two-col">
-      <p class="hero-sub">
+      <p id="hero-sub-el" class="hero-sub" style="opacity:0;transform:translateY(18px);transition:opacity 0.7s ease,transform 0.7s ease;pointer-events:none;">
         <strong>Pop in Hessen</strong> schafft ein hessenweites Popbüro,
         das Musikschaffende, Clubs, Festivals und Kommunen vernetzt –
         und Popkultur in der Kulturpolitik die Stimme gibt, die sie verdient.
       </p>
-      <div class="hero-actions">
+      <div id="hero-actions-el" class="hero-actions" style="opacity:0;transform:translateY(18px);transition:opacity 0.7s ease,transform 0.7s ease;pointer-events:none;">
         
         <a href="#contact" class="btn-ghost">Kontakt aufnehmen</a>
         <div class="scroll-hint">
@@ -1041,233 +1022,32 @@
 })();
 
   // Hero logo scroll scale via CSS custom property (preserves :hover)
-  (function(){
-    var heroLogo = document.querySelector('.hero-logo-link');
-    if(!heroLogo) return;
-    function updateLogoScale() {
-      var scrollY = window.scrollY || window.pageYOffset;
-      var maxScroll = window.innerHeight * 0.55;
-      var progress = Math.min(scrollY / maxScroll, 1);
-      var scale = 1 + progress * 0.5; // up to 1.5x as you scroll
-      heroLogo.style.setProperty('--logo-scroll-scale', scale);
-    }
-    window.addEventListener('scroll', updateLogoScale, {passive: true});
-    updateLogoScale();
-  })();
-
-  // ── News Slider ────────────────────────────────────────────────
-  (function(){
-    var track = document.getElementById('news-track');
-    var dots  = document.querySelectorAll('.news-dot');
-    var prev  = document.getElementById('news-prev');
-    var next  = document.getElementById('news-next');
-    if (!track) return;
-
-    var cards = track.querySelectorAll('.news-card');
-    var total = cards.length;
-    var perView = window.innerWidth <= 860 ? 1 : 3;
-    var current = 0;
-    var maxIdx = total - perView;
-
-    function getCardW() {
-      if (!cards[0]) return 0;
-      return cards[0].offsetWidth + 24; // card width + gap
-    }
-
-    // Infinite carousel: clone first+last perView cards
-    function buildClones() {
-      // Remove old clones
-      track.querySelectorAll('.clone').forEach(function(c){ c.remove(); });
-      var realCards = Array.from(track.querySelectorAll('.news-card:not(.clone)'));
-      realCount = realCards.length;
-      // Append clones of first perView cards at end
-      for (var i = 0; i < perView; i++) {
-        var cl = realCards[i % realCount].cloneNode(true);
-        cl.classList.add('clone');
-        track.appendChild(cl);
-      }
-      // Prepend clones of last perView cards at start
-      for (var i = perView - 1; i >= 0; i--) {
-        var cl = realCards[(realCount - perView + i) % realCount].cloneNode(true);
-        cl.classList.add('clone');
-        track.insertBefore(cl, track.firstChild);
-      }
-      current = perView; // start at first real card
-    }
-
-    var realCount = 0;
-    buildClones();
-    maxIdx = realCount + perView - 1; // last real card position (offset by perView clones at start)
-
-    function goTo(idx) {
-      current = idx;
-      track.style.transition = 'transform 0.5s cubic-bezier(0.25,0.46,0.45,0.94)';
-      track.style.transform = 'translateX(-' + (current * getCardW()) + 'px)';
-      // Update dots based on real position
-      var realIdx = ((current - perView) % realCount + realCount) % realCount;
-      dots.forEach(function(d,i){ d.classList.toggle('active', i === realIdx); });
-      // After transition, silently jump if at clone
-      setTimeout(function(){
-        if (current >= realCount + perView) {
-          track.style.transition = 'none';
-          current = perView;
-          track.style.transform = 'translateX(-' + (current * getCardW()) + 'px)';
-        }
-        if (current < perView) {
-          track.style.transition = 'none';
-          current = realCount + perView - 1;
-          track.style.transform = 'translateX(-' + (current * getCardW()) + 'px)';
-        }
-      }, 520);
-    }
-
-    if (prev) prev.addEventListener('click', function(){ goTo(current - 1); });
-    if (next) next.addEventListener('click', function(){ goTo(current + 1); });
-    dots.forEach(function(d){ d.addEventListener('click', function(){ goTo(+d.dataset.idx + perView); }); });
-
-    // Auto-advance every 4 seconds
-    function startAuto() {
-      return setInterval(function(){
-        goTo(current + 1);
-      }, 4000);
-    }
-    var autoTimer = startAuto();
-    track.addEventListener('mouseenter', function(){ clearInterval(autoTimer); });
-    track.addEventListener('mouseleave', function(){ autoTimer = startAuto(); });
-
-    // Touch/swipe support
-    var touchStartX = 0;
-    track.addEventListener('touchstart', function(e){ touchStartX = e.touches[0].clientX; }, {passive:true});
-    track.addEventListener('touchend', function(e){
-      var dx = e.changedTouches[0].clientX - touchStartX;
-      if (Math.abs(dx) > 40) goTo(dx < 0 ? current + 1 : current - 1);
-    });
-
-    window.addEventListener('resize', function(){
-      perView = window.innerWidth <= 860 ? 1 : 3;
-      maxIdx = total - perView;
-      goTo(Math.min(current, maxIdx));
-    });
-
-    goTo(0);
-  })();
-
-</script>
-
-<!-- ── Modals ── -->
-<div class="modal-overlay" id="modal-darmstadt">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
-    <div class="modal-badge">Netzwerk</div>
-    <h3 class="modal-title">Popnetz Darmstadt gegründet</h3>
-    <div class="modal-date">April 2026</div>
-    <div class="modal-body">
-      <p>Beim Auftakttreffen in Darmstadt wurde das Popnetz Darmstadt offiziell ins Leben gerufen. Musikschaffende, Veranstalter:innen und Kulturakteure aus der Region kamen zusammen, um gemeinsam Strukturen für die Popszene in Südhessen zu entwickeln.</p>
-      <p>Das Popnetz Darmstadt ist ein wichtiger Schritt hin zu einem landesweiten Netzwerk, das lokale Akteure verbindet und politisch sichtbar macht. Pop in Hessen begleitet die Gründung und unterstützt den Aufbau des Netzwerks.</p>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-workshop">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
-    <div class="modal-badge">Veranstaltung</div>
-    <h3 class="modal-title">Workshopreihe für Musikschaffende startet</h3>
-    <div class="modal-date">2026</div>
-    <div class="modal-body">
-      <p>Pop in Hessen startet eine Workshopreihe, die sich gezielt an Musikschaffende in Hessen richtet. Geplant sind praxisnahe Formate zu Themen wie Bandentwicklung, Förderanträge stellen, professionelles Auftreten und nachhaltige Karriereplanung.</p>
-      <p>Die Workshopreihe findet an verschiedenen Standorten in Hessen statt. Weitere Informationen zu Terminen und Anmeldung folgen in Kürze.</p>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-kickoff">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
-    <div class="modal-badge">Veranstaltung</div>
-    <h3 class="modal-title">Kick-off: Popbüro Hessen stellt sich vor</h3>
-    <div class="modal-date">November 2024</div>
-    <div class="modal-body">
-      <p>Beim Auftakttreffen in Kassel kamen Musikschaffende, Kulturämter und Förderinstitutionen erstmals gemeinsam an einen Tisch. Das Popbüro Hessen stellte seine Arbeit und Ziele vor und diskutierte mit den Anwesenden, welche Bedarfe die Szene hat.</p>
-      <p>Der Abend zeigte deutlich: Das Interesse an struktureller Förderung von Popmusik in Hessen ist groß. Für das Popbüro war es ein wichtiger erster Schritt in Richtung eines landesweiten Netzwerks.</p>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-artist">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
-    <div class="modal-badge">Künstler*in</div>
-    <h3 class="modal-title">Rosmarin – Indie-Pop aus Kassel</h3>
-    <div class="modal-date">2025</div>
-    <div class="modal-body">
-      <p>Kassel entwickelt sich zu einem lebendigen Ort für junge Popmusik. Immer mehr Künstlerinnen und Künstler aus der Region finden hier ihren Platz – zwischen Hochschulszene, kleinen Clubs und wachsendem Publikum.</p>
-      <p>Wir stellen regelmäßig Musikschaffende aus Hessen vor, die die lokale Szene prägen. Pop in Hessen sieht Sichtbarkeit für Künstler:innen als einen zentralen Teil seiner Arbeit.</p>
-    </div>
-  </div>
-</div>
-
-<div class="modal-overlay" id="modal-imu">
-  <div class="modal-box">
-    <button class="modal-close" onclick="closeModal()">&times;</button>
-    <div class="modal-badge">Branchennews</div>
-    <h3 class="modal-title">Förderaufruf Initiative Musik 2025 gestartet</h3>
-    <div class="modal-date">Januar 2025</div>
-    <div class="modal-body">
-      <p>Die Initiative Musik hat ihre Förderprogramme für Tourneen, Musikprojekte und strukturelle Maßnahmen ausgeschrieben. Gefördert werden unter anderem nationale und internationale Tourneen, Musikveröffentlichungen sowie strukturelle Projekte.</p>
-      <p>Bewerbungsschluss war der 15. März 2025. Pop in Hessen hat hessische Musikschaffende bei der Antragstellung unterstützt und informiert über aktuelle Ausschreibungen. Weitere Förderaufrufe folgen im Jahresverlauf.</p>
-    </div>
-  </div>
-</div>
-
-<script>
-  // Modal logic
-  document.querySelectorAll('.news-more-btn').forEach(function(btn){
-    btn.addEventListener('click', function(){
-      var id = btn.getAttribute('data-modal');
-      var overlay = document.getElementById(id);
-      if (overlay) overlay.classList.add('open');
-    });
-  });
-  function closeModal() {
-    document.querySelectorAll('.modal-overlay.open').forEach(function(o){ o.classList.remove('open'); });
-  }
-  document.querySelectorAll('.modal-overlay').forEach(function(o){
-    o.addEventListener('click', function(e){ if (e.target === o) closeModal(); });
-  });
-  document.addEventListener('keydown', function(e){ if (e.key === 'Escape') closeModal(); });
-</script>
-
-
   
-
-
+  <!-- Hero Reveal -->
+  <script>
   (function(){
-    var sub     = document.querySelector('.hero-sub');
-    var actions = document.querySelector('.hero-actions');
-    var flybox  = document.querySelector('.hero-logo-flybox');
-    var eyebrow = document.querySelector('.hero-eyebrow');
-    if (!sub || !flybox) return;
-
-    // Hide text initially
-    sub.classList.add('hero-text-hidden');
-    if (actions) actions.classList.add('hero-text-hidden');
-
-    // Make logo bigger initially (add class to parent)
-    if (eyebrow) eyebrow.classList.add('hero-logo-big');
-
-    // On hover over logo, reveal text + normalise logo
-    flybox.addEventListener('mouseenter', function reveal() {
-      sub.classList.remove('hero-text-hidden');
-      sub.classList.add('hero-text-visible');
-      if (actions) {
-        actions.classList.remove('hero-text-hidden');
-        actions.classList.add('hero-text-visible');
+    var wrap    = document.getElementById('hero-scale-wrap');
+    var sub     = document.getElementById('hero-sub-el');
+    var actions = document.getElementById('hero-actions-el');
+    if (!wrap) return;
+    wrap.addEventListener('mouseenter', function reveal() {
+      // Shrink logo to normal
+      wrap.style.transform = 'scale(1)';
+      // Show text
+      if (sub) {
+        sub.style.opacity = '1';
+        sub.style.transform = 'translateY(0)';
+        sub.style.pointerEvents = 'auto';
       }
-      if (eyebrow) eyebrow.classList.remove('hero-logo-big');
-      flybox.removeEventListener('mouseenter', reveal);
+      if (actions) {
+        actions.style.opacity = '1';
+        actions.style.transform = 'translateY(0)';
+        actions.style.pointerEvents = 'auto';
+      }
+      wrap.removeEventListener('mouseenter', reveal);
     });
   })();
+  </script>
 
 </body>
 </html>
