@@ -886,12 +886,92 @@
   <div class="container footer-inner">
     <span class="footer-copy">© 2026 Live in Hessen e.V. · Pop in Hessen</span>
     <ul class="footer-links">
-      <li><a href="#">Impressum</a></li>
-      <li><a href="#">Datenschutz</a></li>
+      <li><a href="#" onclick="document.getElementById('modal-impressum').classList.add('open');return false;">Impressum</a></li>
+      <li><a href="#" onclick="document.getElementById('modal-datenschutz').classList.add('open');return false;">Datenschutz</a></li>
       <li><a href="#">Kontakt</a></li>
     </ul>
   </div>
 </footer>
+
+<!-- ── Impressum Modal ── -->
+<div class="modal-overlay" id="modal-impressum">
+  <div class="modal-box" style="max-width:600px;">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-badge">Rechtliches</div>
+    <h3 class="modal-title">Impressum</h3>
+    <div class="modal-body">
+      <p><strong>Angaben gemäß § 5 TMG</strong></p>
+      <p>
+        Pop in Hessen ist ein Projekt von:<br>
+        <strong>Clubs am Main – Regionales Netzwerk für Veranstaltungs- und Clubkultur in Frankfurt/Rhein-Main e.V.</strong><br>
+        Gutleutstraße 294<br>
+        60327 Frankfurt am Main
+      </p>
+      <p>
+        <strong>Vertreten durch:</strong><br>
+        Matthias Morgenstern
+      </p>
+      <p>
+        <strong>Vereinsregister:</strong><br>
+        Registergericht Frankfurt am Main<br>
+        Registernummer: VR 14980
+      </p>
+      <p>
+        <strong>Redaktionell verantwortlich:</strong><br>
+        Andreas Becker<br>
+        Pop in Hessen – Büro Kassel<br>
+        c/o scm sustainability gmbh<br>
+        Ludwig-Erhard-Str. 12, 34131 Kassel
+      </p>
+      <p>
+        <strong>Kontakt:</strong><br>
+        E-Mail: <a href="mailto:abe@live-in-hessen.de" style="color:var(--gold-bg);">abe@live-in-hessen.de</a><br>
+        <em style="color:var(--text-muted);font-size:0.85em;">(wird ersetzt durch: abe@popinhessen.de)</em><br>
+        Telefon: folgt
+      </p>
+      <p style="font-size:0.85em;color:var(--text-muted);margin-top:1.5rem;">
+        Vereinsregister und Satzung sind auf Anfrage erhältlich.
+      </p>
+    </div>
+  </div>
+</div>
+
+<!-- ── Datenschutz Modal ── -->
+<div class="modal-overlay" id="modal-datenschutz">
+  <div class="modal-box" style="max-width:640px;">
+    <button class="modal-close" onclick="closeModal()">&times;</button>
+    <div class="modal-badge">Rechtliches</div>
+    <h3 class="modal-title">Datenschutzerklärung</h3>
+    <div class="modal-body">
+      <p><strong>1. Verantwortlicher</strong></p>
+      <p>
+        Clubs am Main – Regionales Netzwerk für Veranstaltungs- und Clubkultur in Frankfurt/Rhein-Main e.V.<br>
+        Gutleutstraße 294, 60327 Frankfurt am Main<br>
+        Redaktionell verantwortlich: Andreas Becker<br>
+        E-Mail: <a href="mailto:abe@live-in-hessen.de" style="color:var(--gold-bg);">abe@live-in-hessen.de</a>
+      </p>
+      <p><strong>2. Hosting</strong></p>
+      <p>
+        Diese Website wird über GitHub Pages (GitHub, Inc., 88 Colin P Kelly Jr St, San Francisco, CA 94107, USA) gehostet. Beim Aufruf der Website werden durch den Hoster automatisch Verbindungsdaten (IP-Adresse, Datum, Uhrzeit, aufgerufene Seite) in Server-Logfiles erfasst. Diese Daten sind technisch notwendig und werden nicht mit anderen Datenquellen zusammengeführt. Weitere Informationen: <a href="https://docs.github.com/en/pages/getting-started-with-github-pages/about-github-pages" target="_blank" style="color:var(--gold-bg);">GitHub Pages Datenschutz</a>.
+      </p>
+      <p><strong>3. Cookies und Tracking</strong></p>
+      <p>
+        Diese Website verwendet keine Cookies und kein Web-Tracking. Es werden keine personenbezogenen Daten durch uns erhoben oder gespeichert.
+      </p>
+      <p><strong>4. Kontaktaufnahme</strong></p>
+      <p>
+        Wenn Sie uns per E-Mail kontaktieren, werden Ihre Angaben zur Bearbeitung der Anfrage und für eventuelle Rückfragen gespeichert. Diese Daten geben wir nicht ohne Ihre Einwilligung weiter. Rechtsgrundlage: Art. 6 Abs. 1 lit. f DSGVO (berechtigtes Interesse).
+      </p>
+      <p><strong>5. Ihre Rechte</strong></p>
+      <p>
+        Sie haben jederzeit das Recht auf Auskunft, Berichtigung, Löschung, Einschränkung der Verarbeitung und Datenübertragbarkeit. Bei Beschwerden wenden Sie sich an den <a href="https://www.datenschutz.hessen.de" target="_blank" style="color:var(--gold-bg);">Hessischen Beauftragten für Datenschutz und Informationsfreiheit</a>.
+      </p>
+      <p style="font-size:0.85em;color:var(--text-muted);margin-top:1.5rem;">
+        Stand: April 2026
+      </p>
+    </div>
+  </div>
+</div>
 
 <div class="mockup-badge"></div>
 
