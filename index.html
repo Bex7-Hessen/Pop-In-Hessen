@@ -1078,14 +1078,10 @@
     if (next) next.addEventListener('click', function(){ goTo(current + 1); });
     dots.forEach(function(d){ d.addEventListener('click', function(){ goTo(+d.dataset.idx); }); });
 
-    // Auto-advance alle 4 Sekunden – nahtloser Loop (kein Zurückgleiten)
+    // Auto-advance alle 4 Sekunden – fließend zurück zum Anfang
     function startAuto() {
       return setInterval(function(){
-        if (current >= maxIdx) {
-          goTo(0, true); // sofortiger Reset ohne Slide-Animation
-        } else {
-          goTo(current + 1);
-        }
+        goTo(current >= maxIdx ? 0 : current + 1);
       }, 4000);
     }
     var autoTimer = startAuto();
