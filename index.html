@@ -665,6 +665,13 @@
       font-size:0.66rem;letter-spacing:.1em;text-transform:uppercase;
       user-select:none;pointer-events:none;
     }
+    .form-group{display:flex;flex-direction:column;gap:0.35rem;margin-bottom:1rem;}
+    .form-label{font-size:0.78rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;color:var(--text-muted);}
+    .form-input,.form-textarea{background:rgba(255,255,255,0.06);border:1px solid rgba(200,168,130,0.2);border-radius:4px;color:var(--white);font-family:inherit;font-size:0.9rem;padding:0.7em 0.9em;transition:border-color 0.2s;}
+    .form-input:focus,.form-textarea:focus{outline:none;border-color:var(--gold-bg);}
+    .form-textarea{resize:vertical;min-height:100px;}
+    .form-submit{margin-top:0.5rem;width:100%;cursor:pointer;background:var(--gold-bg);color:var(--bg);border:none;font-family:inherit;font-weight:700;font-size:0.87rem;letter-spacing:0.01em;padding:0.85em 1.75em;border-radius:4px;transition:opacity 0.2s,transform 0.2s;}
+    .form-submit:hover{opacity:0.88;transform:translateY(-1px);}
   </style>
 </head>
 <body>
@@ -749,7 +756,6 @@
       </p>
       <div class="hero-actions">
         
-        <a href="#contact" class="btn-ghost">Kontakt aufnehmen</a>
         <div class="scroll-hint">
           <span class="scroll-line"></span>
           </div>
@@ -958,6 +964,7 @@
     <h3 class="contact-heading">Möchtest du das Popbüro<br/><span>unterstützen</span> oder mitmachen?</h3>
     <div style="display:flex;flex-direction:column;gap:0.9rem;align-items:flex-start;">
       <a href="mailto:abe@live-in-hessen.de" class="btn-primary">abe@live-in-hessen.de</a>
+      <a href="https://docs.google.com/forms/d/e/1FAIpQLSeNw6-_v8f96Q4Mm6f6A5SueX-F-ziBa5m18HGnSyp0IvBzwA/viewform?usp=publish-editor" target="_blank" rel="noopener" class="btn-primary">Jetzt mitmachen →</a>
     </div>
   </div>
 </div>
@@ -1201,6 +1208,7 @@
 <div class="modal-overlay" id="modal-workshop"><div class="modal-box"><button class="modal-close" onclick="closeModal()">&times;</button><div class="modal-badge">Veranstaltung</div><h3 class="modal-title">Workshopreihe für Musikschaffende startet</h3><div class="modal-date">2026</div><div class="modal-body"><p>Pop in Hessen startet eine Workshopreihe für Musikschaffende in Hessen. Geplant sind praxisnahe Formate zu Bandentwicklung, Förderanträge stellen und nachhaltige Karriereplanung.</p><p>Die Workshops finden an verschiedenen Standorten in Hessen statt. Termine und Anmeldung folgen in Kürze.</p></div></div></div>
 <div class="modal-overlay" id="modal-kickoff"><div class="modal-box"><button class="modal-close" onclick="closeModal()">&times;</button><div class="modal-badge">Veranstaltung</div><h3 class="modal-title">Kick-off: Popbüro Hessen stellt sich vor</h3><div class="modal-date">November 2024</div><div class="modal-body"><p>Beim Auftakttreffen in Kassel kamen Musikschaffende, Kulturämter und Förderinstitutionen erstmals gemeinsam an einen Tisch. Das Popbüro Hessen stellte seine Arbeit und Ziele vor.</p><p>Der Abend zeigte: Das Interesse an struktureller Förderung von Popmusik in Hessen ist groß. Ein wichtiger erster Schritt in Richtung eines landesweiten Netzwerks.</p></div></div></div>
 <div class="modal-overlay" id="modal-rosmarin"><div class="modal-box"><button class="modal-close" onclick="closeModal()">&times;</button><div class="modal-badge">Künstler*in</div><h3 class="modal-title">Rosmarin – Indie-Pop aus Kassel</h3><div class="modal-date">2025</div><div class="modal-body"><p>Rosmarin steht für feinfühligen Indie-Pop aus Kassel – mit ehrlichen Texten, warmen Gitarrenklängen und einer Stimme, die bleibt. Die Band ist Teil einer wachsenden Kasseler Popszene.</p><p>Pop in Hessen stellt regelmäßig Künstler:innen aus Hessen vor, die die lokale Szene prägen und Sichtbarkeit verdienen.</p></div></div></div>
+
 
 <script>
   document.querySelectorAll('.news-more-btn').forEach(function(btn){btn.addEventListener('click',function(){var o=document.getElementById(btn.getAttribute('data-modal'));if(o)o.classList.add('open');});});
