@@ -6,6 +6,9 @@
     "ctaLink": "https://tally.so/r/7R1JMz"
   },
   "buero": {
+    "intro": "Ein unabhängiges Kompetenzzentrum für Popmusikkultur in Hessen – offen für alle Akteure der Szene. Getragen von <strong>Live in Hessen e.V.</strong> und <strong>MusicWomen Hessen e.V.</strong>, vernetzt mit Ministerien, Kommunen und der hessischen Musikszene.",
+    "wasWirMachen": "Das Popbüro Hessen bündelt <strong>Beratung, Vernetzung und politische Interessenvertretung</strong> unter einem Dach. Es ist erste Anlaufstelle für Musikschaffende, Veranstalter:innen und Clubs – und gleichzeitig kompetenter Gesprächspartner für Kulturpolitik und Förderinstitutionen.<br/><br/> Wir dokumentieren Bedarfe der hessischen Szene, bringen Akteure zusammen und machen Popmusik als Kulturform sichtbar und strukturell förderungswürdig.",
+    "themenIntro": "Wir arbeiten an den Schnittstellen, die für die Szene zählen:",
     "topics": [
       "Künstler*innenberatung & Karrierebegleitung",
       "Nachwuchsförderung & Talententwicklung",
@@ -15,8 +18,8 @@
     ],
     "stats": [
       { "number": "26", "label": "Landkreise & kreisfreie Städte in Hessen" },
-      { "number": "∞", "label": "Clubs, Festivals & Bands, die Strukturen brauchen" },
-      { "number": "1", "label": "Popbüro – das erste seiner Art in Hessen" }
+      { "number": "∞",  "label": "Clubs, Festivals & Bands, die Strukturen brauchen" },
+      { "number": "1",  "label": "Popbüro – das erste seiner Art in Hessen" }
     ]
   },
   "news": {

@@ -230,6 +230,9 @@
           <span class="icon">◇</span> Angebot
         </div>
         <div class="nav-section" style="margin-top:1rem;">Konfiguration</div>
+        <div class="nav-item" data-page="buero" onclick="showPage('buero',this)">
+          <span class="icon">◉</span> Über das Büro
+        </div>
         <div class="nav-item" data-page="settings" onclick="showPage('settings',this)">
           <span class="icon">⚙</span> Einstellungen
         </div>
@@ -317,6 +320,47 @@
               </thead>
               <tbody id="angebot-table-body"></tbody>
             </table>
+          </div>
+        </div>
+
+        <!-- Büro Page -->
+        <div id="page-buero" class="page">
+          <div class="card">
+            <h3>Einleitungstext (Über das Büro)</h3>
+            <div class="form-group">
+              <label>Intro-Text</label>
+              <textarea id="b-intro" rows="4"></textarea>
+              <small>HTML erlaubt: &lt;strong&gt;, &lt;br/&gt;. Erscheint unter der Überschrift „Was ist das Popbüro Hessen?"</small>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Was wir machen</h3>
+            <div class="form-group">
+              <label>Text</label>
+              <textarea id="b-was-wir-machen" rows="6"></textarea>
+              <small>HTML erlaubt: &lt;strong&gt;, &lt;br/&gt;</small>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Unsere Themenfelder</h3>
+            <div class="form-group">
+              <label>Einleitungssatz</label>
+              <input type="text" id="b-themen-intro"/>
+            </div>
+            <div class="form-group">
+              <label>Themen (ein Thema pro Zeile)</label>
+              <textarea id="b-topics" rows="7"></textarea>
+              <small>Jede Zeile = ein Aufzählungspunkt mit →</small>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Statistiken</h3>
+            <div id="b-stats-container"></div>
+            <button class="btn btn-secondary btn-sm" onclick="addStat()" style="margin-top:0.5rem;">+ Statistik hinzufügen</button>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:0.75rem;">
+            <button class="btn btn-secondary" onclick="loadAllData()">Änderungen verwerfen</button>
+            <button class="btn btn-primary" onclick="saveBuero()">Büro-Texte speichern</button>
           </div>
         </div>
 
@@ -494,6 +538,7 @@ function renderAll() {
   renderDashboard();
   renderNewsTable();
   renderAngebotTable();
+  fillBueroForm();
   fillSettingsForm();
 }
 
@@ -503,7 +548,7 @@ function showPage(name, el) {
   document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
   document.getElementById('page-' + name).classList.add('active');
   if (el) el.classList.add('active');
-  const titles = { dashboard: 'Dashboard', news: 'News / Aktuelles', angebot: 'Angebot', settings: 'Einstellungen' };
+  const titles = { dashboard: 'Dashboard', news: 'News / Aktuelles', angebot: 'Angebot', buero: 'Über das Büro', settings: 'Einstellungen' };
   document.getElementById('page-title').textContent = titles[name] || name;
 }
 
@@ -751,6 +796,76 @@ function deleteAngebotItem(idx) {
   data.angebot.splice(idx, 1);
   renderAngebotTable();
   saveAngebotToGitHub();
+}
+
+/* ── Büro Form ────────────────────────────────────────────────── */
+function fillBueroForm() {
+  const b = data.settings.buero || {};
+  document.getElementById('b-intro').value          = b.intro         || '';
+  document.getElementById('b-was-wir-machen').value = b.wasWirMachen  || '';
+  document.getElementById('b-themen-intro').value   = b.themenIntro   || '';
+  document.getElementById('b-topics').value         = (b.topics || []).join('\n');
+  renderStatFields(b.stats || []);
+}
+
+function renderStatFields(stats) {
+  const container = document.getElementById('b-stats-container');
+  container.innerHTML = stats.map((s, i) => `
+    <div style="display:flex;gap:0.75rem;align-items:flex-start;margin-bottom:0.75rem;">
+      <div class="form-group" style="width:90px;margin:0;">
+        <label>Zahl</label>
+        <input type="text" id="stat-num-f-${i}" value="${escAttr(s.number||'')}" style="width:100%;"/>
+      </div>
+      <div class="form-group" style="flex:1;margin:0;">
+        <label>Beschriftung</label>
+        <input type="text" id="stat-lbl-f-${i}" value="${escAttr(s.label||'')}"/>
+      </div>
+      <button class="btn btn-danger btn-sm" style="margin-top:1.5rem;" onclick="removeStat(${i})">✕</button>
+    </div>`).join('');
+}
+
+function addStat() {
+  const stats = collectStats();
+  stats.push({ number: '', label: '' });
+  renderStatFields(stats);
+}
+
+function removeStat(idx) {
+  const stats = collectStats();
+  stats.splice(idx, 1);
+  renderStatFields(stats);
+}
+
+function collectStats() {
+  const stats = [];
+  let i = 0;
+  while (document.getElementById('stat-num-f-' + i)) {
+    stats.push({
+      number: document.getElementById('stat-num-f-' + i).value.trim(),
+      label:  document.getElementById('stat-lbl-f-' + i).value.trim()
+    });
+    i++;
+  }
+  return stats;
+}
+
+async function saveBuero() {
+  data.settings.buero = {
+    intro:        document.getElementById('b-intro').value.trim(),
+    wasWirMachen: document.getElementById('b-was-wir-machen').value.trim(),
+    themenIntro:  document.getElementById('b-themen-intro').value.trim(),
+    topics:       document.getElementById('b-topics').value.split('\n').map(s => s.trim()).filter(Boolean),
+    stats:        collectStats()
+  };
+  try {
+    toast('Wird gespeichert …', 'ok');
+    const res = await ghPut('content/settings.json', data.settings, fileSHAs.settings,
+      'admin: Update buero texts');
+    fileSHAs.settings = res.content.sha;
+    toast('Büro-Texte gespeichert ✓', 'ok');
+  } catch(e) {
+    toast('Fehler: ' + e.message, 'err');
+  }
 }
 
 /* ── Settings Form ────────────────────────────────────────────── */
