@@ -1,0 +1,29 @@
+{
+  "contact": {
+    "heading": "Möchtest du das Popbüro unterstützen oder mitmachen?",
+    "email": "abe@live-in-hessen.de",
+    "ctaText": "Jetzt mitmachen →",
+    "ctaLink": "https://tally.so/r/7R1JMz"
+  },
+  "buero": {
+    "topics": [
+      "Künstler*innenberatung & Karrierebegleitung",
+      "Nachwuchsförderung & Talententwicklung",
+      "Fördermittelnavigation für Musikschaffende",
+      "Netzwerk & regionale Sichtbarkeit",
+      "Kulturpolitische Interessensvertretung"
+    ],
+    "stats": [
+      { "number": "26", "label": "Landkreise & kreisfreie Städte in Hessen" },
+      { "number": "∞", "label": "Clubs, Festivals & Bands, die Strukturen brauchen" },
+      { "number": "1", "label": "Popbüro – das erste seiner Art in Hessen" }
+    ]
+  },
+  "news": {
+    "sectionTitle": "Was bewegt die Szene"
+  },
+  "angebot": {
+    "sectionTitle": "Unser Angebot",
+    "sectionIntro": "Pop in Hessen unterstützt Musikschaffende, Clubs und Kulturakteure in Hessen mit konkreten Angeboten – kostenlos und niedrigschwellig."
+  }
+}

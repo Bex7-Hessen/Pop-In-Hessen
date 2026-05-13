@@ -1,0 +1,32 @@
+[
+  {
+    "id": "beratung",
+    "tag": "Beratung",
+    "title": "Persönliche Beratung",
+    "body": "Ihr habt Fragen rund um Musikbusiness, Förderung oder Netzwerke? Beratung könnt ihr nach Absprache telefonisch, per Zoom oder vor Ort im Zentrum für Kreativwirtschaft (ZfKW) anfragen.",
+    "buttonText": "Anfragen →",
+    "buttonLink": "mailto:abe@live-in-hessen.de",
+    "visible": true,
+    "order": 1
+  },
+  {
+    "id": "workshopreihe",
+    "tag": "Workshopreihe",
+    "title": "Workshops in Hessen",
+    "body": "Pop in Hessen plant in mehreren hessischen Städten praxisnahe Workshops zu Themen wie Musikbusiness, Förderanträge und Karriereentwicklung für Musikschaffende. Tragt euch ein und bleibt auf dem Laufenden.",
+    "buttonText": "Ins Netzwerk eintragen →",
+    "buttonLink": "https://tally.so/r/7R1JMz",
+    "visible": true,
+    "order": 2
+  },
+  {
+    "id": "foerderung",
+    "tag": "Förderung",
+    "title": "Förderung finden",
+    "body": "Ihr habt ein Projekt und wisst nicht, wie ihr es finanzieren sollt? Wir kennen die Förderlandschaft in Hessen und helfen euch, die passenden Töpfe zu finden.",
+    "buttonText": "Fragt uns →",
+    "buttonLink": "mailto:abe@live-in-hessen.de",
+    "visible": true,
+    "order": 3
+  }
+]

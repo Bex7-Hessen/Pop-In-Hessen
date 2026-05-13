@@ -1,0 +1,856 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+  <title>Pop in Hessen · Admin</title>
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg:       #0f1117;
+      --sidebar:  #161b27;
+      --card:     #1e2333;
+      --border:   rgba(255,255,255,0.08);
+      --gold:     #c8a882;
+      --gold-lit: #ffe135;
+      --text:     #e8e3dc;
+      --muted:    #8b8680;
+      --green:    #4ade80;
+      --red:      #f87171;
+      --amber:    #fbbf24;
+      --radius:   8px;
+      --sidebar-w: 220px;
+    }
+    html, body { height: 100%; font-family: 'Outfit', sans-serif; background: var(--bg); color: var(--text); font-size: 15px; }
+
+    /* ── Login Screen ──────────────────────────────────────── */
+    #login-screen {
+      display: flex; align-items: center; justify-content: center;
+      min-height: 100vh;
+      background: var(--bg);
+    }
+    .login-box {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 2.5rem 2rem;
+      width: 100%; max-width: 420px;
+    }
+    .login-logo { font-size: 1.1rem; font-weight: 700; color: var(--gold); letter-spacing: 0.03em; margin-bottom: 0.3rem; }
+    .login-sub  { font-size: 0.8rem; color: var(--muted); margin-bottom: 2rem; }
+    .login-box h2 { font-size: 1.3rem; font-weight: 600; margin-bottom: 1.5rem; }
+    .form-group { margin-bottom: 1.2rem; }
+    .form-group label { display: block; font-size: 0.82rem; font-weight: 500; color: var(--muted); margin-bottom: 0.4rem; letter-spacing: 0.04em; text-transform: uppercase; }
+    .form-group input, .form-group textarea, .form-group select {
+      width: 100%; padding: 0.65rem 0.85rem;
+      background: var(--bg); border: 1px solid var(--border);
+      border-radius: var(--radius); color: var(--text);
+      font-family: 'Outfit', sans-serif; font-size: 0.9rem;
+      outline: none; transition: border-color 0.2s;
+    }
+    .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+      border-color: var(--gold);
+    }
+    .form-group textarea { resize: vertical; min-height: 100px; line-height: 1.6; }
+    .form-group small { display: block; font-size: 0.75rem; color: var(--muted); margin-top: 0.35rem; line-height: 1.5; }
+    .btn { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.6rem 1.2rem; border-radius: var(--radius); font-family: 'Outfit', sans-serif; font-size: 0.88rem; font-weight: 600; cursor: pointer; border: none; transition: opacity 0.2s, background 0.2s; text-decoration: none; }
+    .btn:hover { opacity: 0.85; }
+    .btn-primary { background: var(--gold); color: #1a1206; }
+    .btn-secondary { background: var(--card); border: 1px solid var(--border); color: var(--text); }
+    .btn-danger { background: rgba(248,113,113,0.15); color: var(--red); border: 1px solid rgba(248,113,113,0.25); }
+    .btn-sm { padding: 0.35rem 0.75rem; font-size: 0.8rem; }
+    .btn-full { width: 100%; justify-content: center; }
+    #login-error { display: none; background: rgba(248,113,113,0.1); border: 1px solid rgba(248,113,113,0.3); border-radius: var(--radius); padding: 0.7rem 1rem; font-size: 0.85rem; color: var(--red); margin-top: 0.8rem; }
+
+    /* ── App Layout ────────────────────────────────────────── */
+    #app { display: none; height: 100vh; overflow: hidden; }
+    .layout { display: flex; height: 100%; }
+
+    /* ── Sidebar ───────────────────────────────────────────── */
+    .sidebar {
+      width: var(--sidebar-w); flex-shrink: 0;
+      background: var(--sidebar);
+      border-right: 1px solid var(--border);
+      display: flex; flex-direction: column;
+      overflow-y: auto;
+    }
+    .sidebar-brand {
+      padding: 1.4rem 1.2rem 1rem;
+      border-bottom: 1px solid var(--border);
+    }
+    .sidebar-brand-name { font-size: 0.95rem; font-weight: 700; color: var(--gold); }
+    .sidebar-brand-sub  { font-size: 0.72rem; color: var(--muted); margin-top: 0.1rem; }
+    .sidebar-nav { padding: 0.8rem 0; flex: 1; }
+    .nav-section { padding: 0.4rem 1.2rem 0.2rem; font-size: 0.68rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.1em; }
+    .nav-item {
+      display: flex; align-items: center; gap: 0.6rem;
+      padding: 0.55rem 1.2rem;
+      font-size: 0.88rem; font-weight: 500;
+      color: var(--muted); cursor: pointer;
+      border-left: 3px solid transparent;
+      transition: color 0.15s, background 0.15s;
+    }
+    .nav-item:hover { color: var(--text); background: rgba(255,255,255,0.04); }
+    .nav-item.active { color: var(--gold); border-left-color: var(--gold); background: rgba(200,168,130,0.08); }
+    .nav-item .icon { font-size: 1rem; width: 1.2rem; text-align: center; }
+    .sidebar-footer { padding: 1rem 1.2rem; border-top: 1px solid var(--border); }
+    .sidebar-user { font-size: 0.78rem; color: var(--muted); }
+    .sidebar-user strong { display: block; color: var(--text); font-size: 0.85rem; }
+
+    /* ── Main Content ──────────────────────────────────────── */
+    .main { flex: 1; overflow-y: auto; display: flex; flex-direction: column; }
+    .main-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.25rem 2rem; border-bottom: 1px solid var(--border);
+      background: var(--bg); position: sticky; top: 0; z-index: 10;
+    }
+    .main-header h1 { font-size: 1.15rem; font-weight: 600; }
+    .main-body { padding: 2rem; flex: 1; }
+
+    /* ── Cards & Tables ────────────────────────────────────── */
+    .card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.5rem; margin-bottom: 1.25rem; }
+    .card h3 { font-size: 0.9rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; margin-bottom: 1rem; }
+
+    .stat-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-bottom: 1.5rem; }
+    .stat-card { background: var(--card); border: 1px solid var(--border); border-radius: var(--radius); padding: 1.2rem 1.4rem; }
+    .stat-card .num { font-size: 2rem; font-weight: 700; color: var(--gold); }
+    .stat-card .lbl { font-size: 0.78rem; color: var(--muted); margin-top: 0.2rem; }
+
+    table { width: 100%; border-collapse: collapse; font-size: 0.88rem; }
+    thead th { text-align: left; padding: 0.5rem 0.75rem; font-size: 0.72rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; border-bottom: 1px solid var(--border); }
+    tbody tr { border-bottom: 1px solid var(--border); transition: background 0.15s; }
+    tbody tr:last-child { border-bottom: none; }
+    tbody tr:hover { background: rgba(255,255,255,0.025); }
+    td { padding: 0.7rem 0.75rem; vertical-align: middle; }
+    .td-actions { display: flex; gap: 0.4rem; justify-content: flex-end; }
+
+    /* ── Status Badges ─────────────────────────────────────── */
+    .badge { display: inline-flex; align-items: center; padding: 0.2rem 0.6rem; border-radius: 99px; font-size: 0.72rem; font-weight: 600; letter-spacing: 0.04em; text-transform: uppercase; }
+    .badge-published { background: rgba(74,222,128,0.12); color: var(--green); }
+    .badge-draft     { background: rgba(251,191,36,0.12);  color: var(--amber); }
+    .badge-hidden    { background: rgba(139,134,128,0.15); color: var(--muted); }
+
+    /* ── Editor Panel ──────────────────────────────────────── */
+    #editor-panel {
+      display: none; position: fixed; inset: 0; z-index: 100;
+      background: rgba(0,0,0,0.55); backdrop-filter: blur(4px);
+      align-items: flex-start; justify-content: flex-end;
+    }
+    #editor-panel.open { display: flex; }
+    .editor-box {
+      width: min(640px, 95vw); height: 100vh; overflow-y: auto;
+      background: var(--sidebar); border-left: 1px solid var(--border);
+      display: flex; flex-direction: column;
+    }
+    .editor-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 1.2rem 1.5rem; border-bottom: 1px solid var(--border);
+      position: sticky; top: 0; background: var(--sidebar); z-index: 5;
+    }
+    .editor-header h2 { font-size: 1rem; font-weight: 600; }
+    .editor-body { padding: 1.5rem; flex: 1; }
+    .editor-footer {
+      padding: 1rem 1.5rem; border-top: 1px solid var(--border);
+      display: flex; gap: 0.75rem; justify-content: flex-end;
+      position: sticky; bottom: 0; background: var(--sidebar);
+    }
+
+    /* ── Alerts ────────────────────────────────────────────── */
+    #toast {
+      position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 999;
+      background: var(--card); border: 1px solid var(--border);
+      border-radius: var(--radius); padding: 0.75rem 1.1rem;
+      font-size: 0.88rem; display: none; align-items: center; gap: 0.5rem;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.4);
+    }
+    #toast.show { display: flex; }
+    #toast.ok  { border-color: rgba(74,222,128,0.4); }
+    #toast.err { border-color: rgba(248,113,113,0.4); color: var(--red); }
+
+    /* ── Separator ─────────────────────────────────────────── */
+    .section-actions { display: flex; gap: 0.75rem; align-items: center; }
+    .flex-between { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+    .page { display: none; }
+    .page.active { display: block; }
+    .text-muted { color: var(--muted); font-size: 0.85rem; }
+    hr.sep { border: none; border-top: 1px solid var(--border); margin: 1.2rem 0; }
+    .required { color: var(--red); }
+
+    /* ── Checkbox toggle ───────────────────────────────────── */
+    .toggle-row { display: flex; align-items: center; gap: 0.75rem; margin-bottom: 0.5rem; }
+    .toggle-row label { font-size: 0.88rem; color: var(--text); cursor: pointer; }
+    input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--gold); cursor: pointer; }
+    input[type=number] { width: 80px; }
+
+    /* ── Sortable order ────────────────────────────────────── */
+    .order-cell input { width: 55px; text-align: center; padding: 0.3rem 0.4rem; }
+  </style>
+</head>
+<body>
+
+<!-- ── Login Screen ──────────────────────────────────────────── -->
+<div id="login-screen">
+  <div class="login-box">
+    <div class="login-logo">Pop in Hessen</div>
+    <div class="login-sub">Admin-Dashboard</div>
+    <h2>Anmelden</h2>
+    <div class="form-group">
+      <label>GitHub Personal Access Token <span class="required">*</span></label>
+      <input type="password" id="pat-input" placeholder="ghp_…" autocomplete="off"/>
+      <small>
+        Erstelle einen Token unter <strong>GitHub → Settings → Developer settings → Personal access tokens → Fine-grained tokens</strong>.<br/>
+        Berechtigung: Repository <strong>Bex7-Hessen/Pop-In-Hessen</strong> → Contents: <strong>Read &amp; Write</strong>.
+      </small>
+    </div>
+    <button class="btn btn-primary btn-full" onclick="doLogin()">Anmelden</button>
+    <div id="login-error">Token ungültig oder keine Schreibberechtigung.</div>
+  </div>
+</div>
+
+<!-- ── App ───────────────────────────────────────────────────── -->
+<div id="app">
+  <div class="layout">
+
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <div class="sidebar-brand">
+        <div class="sidebar-brand-name">Pop in Hessen</div>
+        <div class="sidebar-brand-sub">Admin</div>
+      </div>
+      <nav class="sidebar-nav">
+        <div class="nav-section">Inhalt</div>
+        <div class="nav-item active" data-page="dashboard" onclick="showPage('dashboard',this)">
+          <span class="icon">◈</span> Dashboard
+        </div>
+        <div class="nav-item" data-page="news" onclick="showPage('news',this)">
+          <span class="icon">◎</span> News / Aktuelles
+        </div>
+        <div class="nav-item" data-page="angebot" onclick="showPage('angebot',this)">
+          <span class="icon">◇</span> Angebot
+        </div>
+        <div class="nav-section" style="margin-top:1rem;">Konfiguration</div>
+        <div class="nav-item" data-page="settings" onclick="showPage('settings',this)">
+          <span class="icon">⚙</span> Einstellungen
+        </div>
+      </nav>
+      <div class="sidebar-footer">
+        <div class="sidebar-user">
+          <strong id="sidebar-username">–</strong>
+          Angemeldet
+        </div>
+        <button class="btn btn-secondary btn-sm" style="margin-top:0.6rem;width:100%;" onclick="logout()">Abmelden</button>
+      </div>
+    </aside>
+
+    <!-- Main -->
+    <main class="main">
+      <div class="main-header">
+        <h1 id="page-title">Dashboard</h1>
+        <div id="page-actions"></div>
+      </div>
+      <div class="main-body">
+
+        <!-- Dashboard Page -->
+        <div id="page-dashboard" class="page active">
+          <div class="stat-grid">
+            <div class="stat-card"><div class="num" id="stat-news">–</div><div class="lbl">News-Einträge</div></div>
+            <div class="stat-card"><div class="num" id="stat-angebot">–</div><div class="lbl">Angebote</div></div>
+            <div class="stat-card"><div class="num" id="stat-published">–</div><div class="lbl">Veröffentlicht</div></div>
+          </div>
+          <div class="card">
+            <h3>Schnellzugriff</h3>
+            <div style="display:flex;gap:0.75rem;flex-wrap:wrap;">
+              <button class="btn btn-primary" onclick="showPage('news',document.querySelector('[data-page=news]'));openNewsEditor()">+ Neue News</button>
+              <button class="btn btn-secondary" onclick="showPage('angebot',document.querySelector('[data-page=angebot]'))">Angebote bearbeiten</button>
+              <a class="btn btn-secondary" href="https://bex7-hessen.github.io/Pop-In-Hessen/" target="_blank" rel="noopener">Website ansehen ↗</a>
+            </div>
+          </div>
+          <div class="card">
+            <h3>So funktioniert das Dashboard</h3>
+            <p class="text-muted" style="line-height:1.8;">
+              Änderungen werden direkt als Git-Commit ins Repository geschrieben und sind nach ca. 30–60 Sekunden auf der Website sichtbar.<br/>
+              Dein GitHub-Token ist nur in diesem Browser-Tab gespeichert und wird beim Schließen gelöscht.
+            </p>
+          </div>
+        </div>
+
+        <!-- News Page -->
+        <div id="page-news" class="page">
+          <div class="flex-between">
+            <span class="text-muted" id="news-count-label"></span>
+            <button class="btn btn-primary btn-sm" onclick="openNewsEditor()">+ Neuer Eintrag</button>
+          </div>
+          <div class="card" style="padding:0;overflow:hidden;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Reihenf.</th>
+                  <th>Kategorie</th>
+                  <th>Datum</th>
+                  <th>Titel</th>
+                  <th>Status</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="news-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Angebot Page -->
+        <div id="page-angebot" class="page">
+          <div class="flex-between">
+            <span class="text-muted">3 Angebot-Karten – Reihenfolge und Texte bearbeiten</span>
+            <button class="btn btn-primary btn-sm" onclick="openAngebotEditor()">+ Neue Karte</button>
+          </div>
+          <div class="card" style="padding:0;overflow:hidden;">
+            <table>
+              <thead>
+                <tr>
+                  <th>Reihenf.</th>
+                  <th>Tag</th>
+                  <th>Titel</th>
+                  <th>Sichtbar</th>
+                  <th></th>
+                </tr>
+              </thead>
+              <tbody id="angebot-table-body"></tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Settings Page -->
+        <div id="page-settings" class="page">
+          <div class="card">
+            <h3>Kontakt-Sektion</h3>
+            <div class="form-group">
+              <label>E-Mail-Adresse</label>
+              <input type="email" id="s-email" placeholder="abe@live-in-hessen.de"/>
+            </div>
+            <div class="form-group">
+              <label>CTA-Button Text</label>
+              <input type="text" id="s-cta-text" placeholder="Jetzt mitmachen →"/>
+            </div>
+            <div class="form-group">
+              <label>CTA-Button Link</label>
+              <input type="url" id="s-cta-link" placeholder="https://tally.so/r/..."/>
+            </div>
+          </div>
+          <div class="card">
+            <h3>Büro-Themenfelder</h3>
+            <div class="form-group">
+              <label>Themen (ein Thema pro Zeile)</label>
+              <textarea id="s-topics" rows="7"></textarea>
+              <small>Jede Zeile wird als eigener Aufzählungspunkt angezeigt.</small>
+            </div>
+          </div>
+          <div style="display:flex;justify-content:flex-end;gap:0.75rem;">
+            <button class="btn btn-secondary" onclick="loadAllData()">Änderungen verwerfen</button>
+            <button class="btn btn-primary" onclick="saveSettings()">Einstellungen speichern</button>
+          </div>
+        </div>
+
+      </div><!-- /main-body -->
+    </main><!-- /main -->
+  </div><!-- /layout -->
+</div><!-- /app -->
+
+<!-- ── Editor Panel (Slide-in) ───────────────────────────────── -->
+<div id="editor-panel">
+  <div class="editor-box">
+    <div class="editor-header">
+      <h2 id="editor-title">Eintrag bearbeiten</h2>
+      <button class="btn btn-secondary btn-sm" onclick="closeEditor()">✕ Schließen</button>
+    </div>
+    <div class="editor-body" id="editor-body"></div>
+    <div class="editor-footer">
+      <button class="btn btn-secondary" onclick="closeEditor()">Abbrechen</button>
+      <button class="btn btn-primary" id="editor-save-btn" onclick="saveEditorItem()">Speichern</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── Toast ─────────────────────────────────────────────────── -->
+<div id="toast"></div>
+
+<script>
+/* ================================================================
+   Pop in Hessen Admin Dashboard
+   GitHub API + PAT Authentication
+================================================================ */
+
+const REPO  = 'Bex7-Hessen/Pop-In-Hessen';
+const BASE  = 'https://api.github.com/repos/' + REPO + '/contents/';
+const BRANCH = 'main';
+
+let PAT = '';
+let data = { news: [], angebot: [], settings: {} };
+let fileSHAs = { news: null, angebot: null, settings: null };
+let editorMode  = '';   // 'news' or 'angebot'
+let editorIndex = -1;   // -1 = new item
+
+/* ── Auth ─────────────────────────────────────────────────────── */
+async function doLogin() {
+  const token = document.getElementById('pat-input').value.trim();
+  if (!token) return showError('Bitte Token eingeben.');
+  try {
+    const r = await fetch('https://api.github.com/repos/' + REPO, {
+      headers: { Authorization: 'Bearer ' + token, Accept: 'application/vnd.github+json' }
+    });
+    if (!r.ok) { showLoginError(); return; }
+    const repo = await r.json();
+    // Verify write access
+    if (!repo.permissions || (!repo.permissions.push && !repo.permissions.admin)) {
+      showLoginError('Token hat keine Schreibberechtigung.'); return;
+    }
+    PAT = token;
+    sessionStorage.setItem('pih_pat', PAT);
+    const me = await fetch('https://api.github.com/user', {
+      headers: { Authorization: 'Bearer ' + PAT }
+    }).then(r => r.json());
+    document.getElementById('sidebar-username').textContent = me.login || 'Admin';
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('app').style.display = 'block';
+    await loadAllData();
+  } catch(e) { showLoginError(); }
+}
+
+function showLoginError(msg) {
+  const el = document.getElementById('login-error');
+  el.textContent = msg || 'Token ungültig oder keine Schreibberechtigung.';
+  el.style.display = 'block';
+}
+
+function logout() {
+  sessionStorage.removeItem('pih_pat');
+  PAT = '';
+  document.getElementById('app').style.display = 'none';
+  document.getElementById('login-screen').style.display = 'flex';
+  document.getElementById('pat-input').value = '';
+  document.getElementById('login-error').style.display = 'none';
+}
+
+/* ── GitHub API Helpers ───────────────────────────────────────── */
+async function ghGet(path) {
+  const r = await fetch(BASE + path + '?ref=' + BRANCH + '&t=' + Date.now(), {
+    headers: { Authorization: 'Bearer ' + PAT, Accept: 'application/vnd.github+json' }
+  });
+  if (!r.ok) throw new Error('GET ' + path + ' → ' + r.status);
+  return r.json();
+}
+
+async function ghPut(path, json, sha, message) {
+  const content = btoa(unescape(encodeURIComponent(JSON.stringify(json, null, 2))));
+  const body = { message, content, branch: BRANCH };
+  if (sha) body.sha = sha;
+  const r = await fetch(BASE + path, {
+    method: 'PUT',
+    headers: {
+      Authorization: 'Bearer ' + PAT,
+      Accept: 'application/vnd.github+json',
+      'Content-Type': 'application/json'
+    },
+    body: JSON.stringify(body)
+  });
+  if (!r.ok) {
+    const err = await r.json().catch(() => ({}));
+    throw new Error(err.message || ('PUT ' + path + ' → ' + r.status));
+  }
+  return r.json();
+}
+
+async function loadFile(key, path) {
+  try {
+    const resp = await ghGet(path);
+    fileSHAs[key] = resp.sha;
+    const decoded = decodeURIComponent(escape(atob(resp.content.replace(/\n/g, ''))));
+    return JSON.parse(decoded);
+  } catch(e) {
+    console.warn('Could not load', path, e);
+    return key === 'settings' ? {} : [];
+  }
+}
+
+/* ── Data Loading ─────────────────────────────────────────────── */
+async function loadAllData() {
+  try {
+    const [news, angebot, settings] = await Promise.all([
+      loadFile('news',     'content/news.json'),
+      loadFile('angebot',  'content/angebot.json'),
+      loadFile('settings', 'content/settings.json'),
+    ]);
+    data.news     = news;
+    data.angebot  = angebot;
+    data.settings = settings;
+    renderAll();
+    toast('Daten geladen ✓', 'ok');
+  } catch(e) {
+    toast('Fehler beim Laden: ' + e.message, 'err');
+  }
+}
+
+function renderAll() {
+  renderDashboard();
+  renderNewsTable();
+  renderAngebotTable();
+  fillSettingsForm();
+}
+
+/* ── Navigation ────────────────────────────────────────────────── */
+function showPage(name, el) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  if (el) el.classList.add('active');
+  const titles = { dashboard: 'Dashboard', news: 'News / Aktuelles', angebot: 'Angebot', settings: 'Einstellungen' };
+  document.getElementById('page-title').textContent = titles[name] || name;
+}
+
+/* ── Dashboard ─────────────────────────────────────────────────── */
+function renderDashboard() {
+  const pub = data.news.filter(n => n.status === 'published').length;
+  document.getElementById('stat-news').textContent    = data.news.length;
+  document.getElementById('stat-angebot').textContent = data.angebot.length;
+  document.getElementById('stat-published').textContent = pub;
+}
+
+/* ── News Table ────────────────────────────────────────────────── */
+function renderNewsTable() {
+  const sorted = [...data.news].sort((a,b) => (a.order||99) - (b.order||99));
+  const tbody = document.getElementById('news-table-body');
+  tbody.innerHTML = sorted.map((item, i) => {
+    const origIdx = data.news.indexOf(item);
+    const badge = item.status === 'published'
+      ? '<span class="badge badge-published">Publiziert</span>'
+      : '<span class="badge badge-draft">Entwurf</span>';
+    return `<tr>
+      <td class="order-cell"><input type="number" value="${item.order||i+1}" min="1" style="width:50px;"
+        onchange="updateNewsOrder(${origIdx}, this.value)"/></td>
+      <td>${escHtml(item.category||'')}</td>
+      <td style="white-space:nowrap;">${escHtml(item.date||'')}</td>
+      <td><strong>${escHtml(item.title||'')}</strong></td>
+      <td>${badge}</td>
+      <td><div class="td-actions">
+        <button class="btn btn-secondary btn-sm" onclick="openNewsEditor(${origIdx})">Bearbeiten</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteNewsItem(${origIdx})">Löschen</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+  document.getElementById('news-count-label').textContent = data.news.length + ' Einträge';
+}
+
+function updateNewsOrder(idx, val) {
+  data.news[idx].order = parseInt(val) || 1;
+}
+
+/* ── News Editor ──────────────────────────────────────────────── */
+function openNewsEditor(idx) {
+  editorMode  = 'news';
+  editorIndex = (idx !== undefined) ? idx : -1;
+  const item = idx !== undefined ? data.news[idx] : {};
+  document.getElementById('editor-title').textContent = idx !== undefined ? 'News bearbeiten' : 'Neue News';
+  document.getElementById('editor-body').innerHTML = `
+    <div class="form-group">
+      <label>Titel <span class="required">*</span></label>
+      <input type="text" id="ef-title" value="${escAttr(item.title||'')}" placeholder="Titel des Beitrags"/>
+    </div>
+    <div class="form-group">
+      <label>Kategorie <span class="required">*</span></label>
+      <select id="ef-category">
+        <option value="Veranstaltung" ${item.category==='Veranstaltung'?'selected':''}>Veranstaltung</option>
+        <option value="Netzwerk" ${item.category==='Netzwerk'?'selected':''}>Netzwerk</option>
+        <option value="Künstler*in" ${item.category==='Künstler*in'?'selected':''}>Künstler*in</option>
+        <option value="Förderung" ${item.category==='Förderung'?'selected':''}>Förderung</option>
+        <option value="Sonstiges" ${item.category==='Sonstiges'?'selected':''}>Sonstiges</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Badge-Stil</label>
+      <select id="ef-badgeClass">
+        <option value="badge-event" ${(item.badgeClass||'badge-event')==='badge-event'?'selected':''}>Event (grün)</option>
+        <option value="badge-artist" ${item.badgeClass==='badge-artist'?'selected':''}>Künstler*in (lila)</option>
+      </select>
+    </div>
+    <div class="form-group">
+      <label>Datum <span class="required">*</span></label>
+      <input type="text" id="ef-date" value="${escAttr(item.date||'')}" placeholder="z.B. 16. Juni 2026 oder 2026"/>
+    </div>
+    <div class="form-group">
+      <label>Kurztext / Teaser <span class="required">*</span></label>
+      <textarea id="ef-excerpt" rows="3" placeholder="Kurze Beschreibung für die Karte (1–2 Sätze)">${escHtml(item.excerpt||'')}</textarea>
+    </div>
+    <div class="form-group">
+      <label>Volltext (HTML) – erscheint im Modal bei „Mehr lesen"</label>
+      <textarea id="ef-body" rows="8" placeholder="&lt;p&gt;Volltext hier…&lt;/p&gt;">${escHtml(item.body||'')}</textarea>
+      <small>Einfaches HTML erlaubt: &lt;p&gt;, &lt;strong&gt;, &lt;br/&gt;, &lt;a href=&quot;…&quot;&gt;. Leer lassen = kein Modal.</small>
+    </div>
+    <div class="form-group">
+      <label>Bild-URL (optional)</label>
+      <input type="url" id="ef-imageUrl" value="${escAttr(item.imageUrl||'')}" placeholder="https://… oder leer lassen"/>
+      <small>Leer lassen zeigt einen Platzhalter. Bilder können später im media/-Ordner des Repos abgelegt werden.</small>
+    </div>
+    <div class="form-group">
+      <label>Reihenfolge</label>
+      <input type="number" id="ef-order" value="${item.order||data.news.length+1}" min="1"/>
+    </div>
+    <div class="form-group">
+      <label>Status</label>
+      <select id="ef-status">
+        <option value="published" ${(item.status||'published')==='published'?'selected':''}>Veröffentlicht</option>
+        <option value="draft" ${item.status==='draft'?'selected':''}>Entwurf</option>
+      </select>
+    </div>
+  `;
+  document.getElementById('editor-panel').classList.add('open');
+}
+
+/* ── Angebot Editor ───────────────────────────────────────────── */
+function renderAngebotTable() {
+  const sorted = [...data.angebot].sort((a,b) => (a.order||99) - (b.order||99));
+  const tbody = document.getElementById('angebot-table-body');
+  tbody.innerHTML = sorted.map((item) => {
+    const origIdx = data.angebot.indexOf(item);
+    const vis = item.visible !== false
+      ? '<span class="badge badge-published">Sichtbar</span>'
+      : '<span class="badge badge-hidden">Ausgeblendet</span>';
+    return `<tr>
+      <td class="order-cell"><input type="number" value="${item.order||origIdx+1}" min="1" style="width:50px;"
+        onchange="data.angebot[${origIdx}].order=parseInt(this.value)||1"/></td>
+      <td><strong>${escHtml(item.tag||'')}</strong></td>
+      <td>${escHtml(item.title||'')}</td>
+      <td>${vis}</td>
+      <td><div class="td-actions">
+        <button class="btn btn-secondary btn-sm" onclick="openAngebotEditor(${origIdx})">Bearbeiten</button>
+        <button class="btn btn-danger btn-sm" onclick="deleteAngebotItem(${origIdx})">Löschen</button>
+      </div></td>
+    </tr>`;
+  }).join('');
+}
+
+function openAngebotEditor(idx) {
+  editorMode  = 'angebot';
+  editorIndex = (idx !== undefined) ? idx : -1;
+  const item = idx !== undefined ? data.angebot[idx] : {};
+  document.getElementById('editor-title').textContent = idx !== undefined ? 'Angebot bearbeiten' : 'Neue Angebot-Karte';
+  document.getElementById('editor-body').innerHTML = `
+    <div class="form-group">
+      <label>Tag / Label <span class="required">*</span></label>
+      <input type="text" id="ef-tag" value="${escAttr(item.tag||'')}" placeholder="z.B. Beratung, Förderung"/>
+    </div>
+    <div class="form-group">
+      <label>Titel <span class="required">*</span></label>
+      <input type="text" id="ef-title" value="${escAttr(item.title||'')}" placeholder="Kartenüberschrift"/>
+    </div>
+    <div class="form-group">
+      <label>Beschreibungstext <span class="required">*</span></label>
+      <textarea id="ef-body" rows="5" placeholder="Fließtext der Karte">${escHtml(item.body||'')}</textarea>
+    </div>
+    <div class="form-group">
+      <label>Button-Text <span class="required">*</span></label>
+      <input type="text" id="ef-buttonText" value="${escAttr(item.buttonText||'')}" placeholder="z.B. Anfragen →"/>
+    </div>
+    <div class="form-group">
+      <label>Button-Link <span class="required">*</span></label>
+      <input type="text" id="ef-buttonLink" value="${escAttr(item.buttonLink||'')}" placeholder="mailto:… oder https://…"/>
+    </div>
+    <div class="form-group">
+      <label>Reihenfolge</label>
+      <input type="number" id="ef-order" value="${item.order||data.angebot.length+1}" min="1"/>
+    </div>
+    <div class="toggle-row">
+      <input type="checkbox" id="ef-visible" ${item.visible!==false?'checked':''}/>
+      <label for="ef-visible">Karte auf der Website anzeigen</label>
+    </div>
+  `;
+  document.getElementById('editor-panel').classList.add('open');
+}
+
+/* ── Save Editor ──────────────────────────────────────────────── */
+function saveEditorItem() {
+  if (editorMode === 'news')    saveNewsItem();
+  if (editorMode === 'angebot') saveAngebotItem();
+}
+
+function saveNewsItem() {
+  const title   = document.getElementById('ef-title')?.value.trim();
+  const category = document.getElementById('ef-category')?.value;
+  const date    = document.getElementById('ef-date')?.value.trim();
+  const excerpt = document.getElementById('ef-excerpt')?.value.trim();
+  if (!title || !date || !excerpt) { toast('Bitte Titel, Datum und Kurztext ausfüllen.', 'err'); return; }
+
+  const item = {
+    id:         slugify(title),
+    status:     document.getElementById('ef-status')?.value || 'draft',
+    category,
+    badgeClass: document.getElementById('ef-badgeClass')?.value || 'badge-event',
+    date,
+    title,
+    excerpt,
+    body:       document.getElementById('ef-body')?.value.trim() || '',
+    imageUrl:   document.getElementById('ef-imageUrl')?.value.trim() || '',
+    imageAlt:   title,
+    imagePosition: 'center center',
+    order:      parseInt(document.getElementById('ef-order')?.value) || data.news.length + 1
+  };
+
+  if (editorIndex >= 0) {
+    item.id = data.news[editorIndex].id; // keep original id
+    data.news[editorIndex] = item;
+  } else {
+    data.news.push(item);
+  }
+
+  closeEditor();
+  renderNewsTable();
+  renderDashboard();
+  saveNewsToGitHub();
+}
+
+function saveAngebotItem() {
+  const tag   = document.getElementById('ef-tag')?.value.trim();
+  const title = document.getElementById('ef-title')?.value.trim();
+  const body  = document.getElementById('ef-body')?.value.trim();
+  const btnText = document.getElementById('ef-buttonText')?.value.trim();
+  const btnLink = document.getElementById('ef-buttonLink')?.value.trim();
+  if (!tag || !title || !body || !btnText || !btnLink) { toast('Bitte alle Pflichtfelder ausfüllen.', 'err'); return; }
+
+  const item = {
+    id:          editorIndex >= 0 ? data.angebot[editorIndex].id : slugify(title),
+    tag,
+    title,
+    body,
+    buttonText:  btnText,
+    buttonLink:  btnLink,
+    visible:     document.getElementById('ef-visible')?.checked !== false,
+    order:       parseInt(document.getElementById('ef-order')?.value) || data.angebot.length + 1
+  };
+
+  if (editorIndex >= 0) {
+    data.angebot[editorIndex] = item;
+  } else {
+    data.angebot.push(item);
+  }
+
+  closeEditor();
+  renderAngebotTable();
+  saveAngebotToGitHub();
+}
+
+/* ── Delete ───────────────────────────────────────────────────── */
+function deleteNewsItem(idx) {
+  if (!confirm('Diesen News-Eintrag wirklich löschen?')) return;
+  data.news.splice(idx, 1);
+  renderNewsTable();
+  renderDashboard();
+  saveNewsToGitHub();
+}
+
+function deleteAngebotItem(idx) {
+  if (!confirm('Diese Angebot-Karte wirklich löschen?')) return;
+  data.angebot.splice(idx, 1);
+  renderAngebotTable();
+  saveAngebotToGitHub();
+}
+
+/* ── Settings Form ────────────────────────────────────────────── */
+function fillSettingsForm() {
+  const c = data.settings.contact || {};
+  const b = data.settings.buero   || {};
+  document.getElementById('s-email').value    = c.email    || '';
+  document.getElementById('s-cta-text').value = c.ctaText  || '';
+  document.getElementById('s-cta-link').value = c.ctaLink  || '';
+  document.getElementById('s-topics').value   = (b.topics  || []).join('\n');
+}
+
+async function saveSettings() {
+  const email   = document.getElementById('s-email').value.trim();
+  const ctaText = document.getElementById('s-cta-text').value.trim();
+  const ctaLink = document.getElementById('s-cta-link').value.trim();
+  if (!email) { toast('E-Mail-Adresse fehlt.', 'err'); return; }
+
+  data.settings.contact = {
+    heading:  data.settings.contact?.heading || 'Möchtest du das Popbüro unterstützen oder mitmachen?',
+    email,
+    ctaText,
+    ctaLink
+  };
+  data.settings.buero = data.settings.buero || {};
+  data.settings.buero.topics = document.getElementById('s-topics').value
+    .split('\n').map(s => s.trim()).filter(Boolean);
+
+  try {
+    toast('Wird gespeichert …', 'ok');
+    const res = await ghPut('content/settings.json', data.settings, fileSHAs.settings,
+      'admin: Update settings');
+    fileSHAs.settings = res.content.sha;
+    toast('Einstellungen gespeichert ✓', 'ok');
+  } catch(e) {
+    toast('Fehler: ' + e.message, 'err');
+  }
+}
+
+/* ── Save to GitHub ───────────────────────────────────────────── */
+async function saveNewsToGitHub() {
+  try {
+    toast('Wird gespeichert …', 'ok');
+    const res = await ghPut('content/news.json', data.news, fileSHAs.news,
+      'admin: Update news');
+    fileSHAs.news = res.content.sha;
+    toast('News gespeichert ✓', 'ok');
+  } catch(e) {
+    toast('Fehler: ' + e.message, 'err');
+  }
+}
+
+async function saveAngebotToGitHub() {
+  try {
+    toast('Wird gespeichert …', 'ok');
+    const res = await ghPut('content/angebot.json', data.angebot, fileSHAs.angebot,
+      'admin: Update angebot');
+    fileSHAs.angebot = res.content.sha;
+    toast('Angebot gespeichert ✓', 'ok');
+  } catch(e) {
+    toast('Fehler: ' + e.message, 'err');
+  }
+}
+
+/* ── Editor Panel ─────────────────────────────────────────────── */
+function closeEditor() {
+  document.getElementById('editor-panel').classList.remove('open');
+}
+document.getElementById('editor-panel').addEventListener('click', e => {
+  if (e.target === document.getElementById('editor-panel')) closeEditor();
+});
+
+/* ── Toast ────────────────────────────────────────────────────── */
+let toastTimer;
+function toast(msg, type) {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'show ' + (type || '');
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => el.classList.remove('show'), 3500);
+}
+
+/* ── Helpers ──────────────────────────────────────────────────── */
+function escHtml(s) { return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(s) { return String(s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;'); }
+function slugify(s) {
+  return String(s).toLowerCase()
+    .replace(/ä/g,'ae').replace(/ö/g,'oe').replace(/ü/g,'ue').replace(/ß/g,'ss')
+    .replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'')
+    + '-' + Date.now().toString(36);
+}
+
+/* ── Auto-restore session ─────────────────────────────────────── */
+(async function init() {
+  const saved = sessionStorage.getItem('pih_pat');
+  if (saved) {
+    document.getElementById('pat-input').value = saved;
+    await doLogin();
+  }
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,67 @@
+[
+  {
+    "id": "popnetz-darmstadt-2026",
+    "status": "published",
+    "category": "Netzwerk",
+    "badgeClass": "badge-event",
+    "date": "April 2026",
+    "title": "Popnetz Darmstadt gegründet",
+    "excerpt": "Beim Auftakttreffen in Darmstadt wurde das Popnetz Darmstadt offiziell ins Leben gerufen – ein wichtiger Schritt für die regionale Vernetzung der Popszene in Südhessen.",
+    "body": "<p>Beim Auftakttreffen in Darmstadt wurde das Popnetz Darmstadt offiziell ins Leben gerufen. Musikschaffende, Veranstalter:innen und Kulturakteure aus der Region kamen zusammen, um gemeinsam Strukturen für die Popszene in Südhessen zu entwickeln.</p><p>Das Popnetz Darmstadt ist ein wichtiger Schritt hin zu einem landesweiten Netzwerk. Pop in Hessen begleitet die Gründung und unterstützt den Aufbau des Netzwerks.</p>",
+    "imageAlt": "Popnetz Darmstadt",
+    "imagePosition": "center center",
+    "order": 1
+  },
+  {
+    "id": "workshopreihe-2026",
+    "status": "published",
+    "category": "Veranstaltung",
+    "badgeClass": "badge-event",
+    "date": "2026",
+    "title": "Workshopreihe für Musikschaffende startet",
+    "excerpt": "Pop in Hessen startet eine Workshopreihe für Musikschaffende – mit Themen rund um Bandentwicklung, Förderanträge und professionelles Auftreten.",
+    "body": "<p>Pop in Hessen startet eine Workshopreihe für Musikschaffende in Hessen. Geplant sind praxisnahe Formate zu Bandentwicklung, Förderanträge stellen und nachhaltige Karriereplanung.</p><p>Die Workshops finden an verschiedenen Standorten in Hessen statt. Termine und Anmeldung folgen in Kürze.</p>",
+    "imageAlt": "Workshopreihe",
+    "imagePosition": "center center",
+    "order": 2
+  },
+  {
+    "id": "kickoff-2024",
+    "status": "published",
+    "category": "Veranstaltung",
+    "badgeClass": "badge-event",
+    "date": "November 2024",
+    "title": "Kick-off: Popbüro Hessen stellt sich vor",
+    "excerpt": "Beim Auftakttreffen in Kassel kamen Musikschaffende, Kulturämter und Förderinstitutionen erstmals gemeinsam an einen Tisch. Ein wichtiger erster Schritt.",
+    "body": "<p>Beim Auftakttreffen in Kassel kamen Musikschaffende, Kulturämter und Förderinstitutionen erstmals gemeinsam an einen Tisch. Das Popbüro Hessen stellte seine Arbeit und Ziele vor.</p><p>Der Abend zeigte: Das Interesse an struktureller Förderung von Popmusik in Hessen ist groß. Ein wichtiger erster Schritt in Richtung eines landesweiten Netzwerks.</p>",
+    "imageAlt": "Kick-off",
+    "imagePosition": "center center",
+    "order": 3
+  },
+  {
+    "id": "rosmarin-2025",
+    "status": "published",
+    "category": "Künstler*in",
+    "badgeClass": "badge-artist",
+    "date": "2025",
+    "title": "Rosmarin – Indie-Pop aus Kassel",
+    "excerpt": "Mit feinfühligen Texten und warmen Gitarrenklängen steht Rosmarin für das, was Hessens Popszene ausmacht: ehrlich, eigen, lebendig.",
+    "body": "<p>Rosmarin steht für feinfühligen Indie-Pop aus Kassel – mit ehrlichen Texten, warmen Gitarrenklängen und einer Stimme, die bleibt. Die Band ist Teil einer wachsenden Kasseler Popszene.</p><p>Pop in Hessen stellt regelmäßig Künstler:innen aus Hessen vor, die die lokale Szene prägen und Sichtbarkeit verdienen.</p>",
+    "imageAlt": "Rosmarin",
+    "imagePosition": "center top",
+    "order": 4
+  },
+  {
+    "id": "club-collation-2026",
+    "status": "published",
+    "category": "Veranstaltung",
+    "badgeClass": "badge-event",
+    "date": "16. Juni 2026",
+    "title": "La Club Collation",
+    "excerpt": "Austausch und Netzwerk für Kasseler Clubs, Festivals und Veranstaltende. 16 Uhr · Kulturzelt Kassel",
+    "body": "<p><strong>Austausch und Netzwerk für Kasseler Clubs, Festivals und Veranstaltende</strong></p><p>📍 Kulturzelt Kassel &nbsp;|&nbsp; ⏰ 16:00 Uhr</p><p><strong>Programm:</strong><br/>01 Kennenlernen &amp; Austausch<br/>02 Impuls: Clubförderung der Stadt Kassel<br/>03 Freies Netzwerken</p><p><strong>Gemeinsamer Konzertbesuch:</strong><br/>Kapa Tult im Kulturzelt Kassel</p>",
+    "imageAlt": "La Club Collation",
+    "imagePosition": "center center",
+    "order": 5
+  }
+]
