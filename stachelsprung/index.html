@@ -37,6 +37,7 @@
   const muteBtn = document.getElementById('mute');
 
   // ---------- Einstellungen (alles in Welt-Einheiten) ----------
+  const VERSION = '3';
   const GRAVITY = 2600;
   const JUMP_V = 950;
   const START_SPEED = 240;
@@ -130,7 +131,7 @@
   let state = 'start';      // 'start' | 'play' | 'over'
   let score = 0, best = 0, elapsed = 0, speed = START_SPEED;
   let distance = 0, overTime = 0, shake = 0, newBest = false, overMsg = null;
-  let player, obstacles, popups, nextGap, spawnRight, jumpBufferT, hintsShown;
+  let player, obstacles, popups, nextGap, spawnRight, jumpBufferT, hintsShown, introduced;
   try { best = parseInt(localStorage.getItem('stachelsprung-best'), 10) || 0; } catch (e) {}
 
   function reset() {
@@ -146,6 +147,7 @@
     spawnRight = viewW + 30;  // rechte Kante der zuletzt erzeugten Welle
     jumpBufferT = 0;
     hintsShown = { bar: 0, wall: 0 };
+    introduced = { bar: false, wall: false };
   }
   reset();
 
@@ -254,9 +256,14 @@
     const airTime = 2 * JUMP_V / GRAVITY;
     let extra = 0;  // zusätzlicher Abstand danach (z. B. Sturz von der Wand)
     const roll = Math.random();
-    if (score >= 5 && roll < 0.14) {
+    // Stange und Wand kommen garantiert früh (bei 3 bzw. 6 Punkten), danach zufällig
+    const bar = score >= 3 && (!introduced.bar || roll < 0.17);
+    const wall = !bar && score >= 6 && (!introduced.wall || roll < 0.34);
+    if (bar) {
+      introduced.bar = true;
       addBar(x);
-    } else if (score >= 8 && roll < 0.26) {
+    } else if (wall) {
+      introduced.wall = true;
       addWall(x);
       extra = speed * 0.45;
     } else {
@@ -702,6 +709,7 @@
       ctx.globalAlpha = 1;
       text('Tippen = Springen · jede Kugel = 1 Punkt', viewW / 2, midY + 48, 15, '#fff', 'center', 600);
       text('Hangeln = 2 Punkte · Klettern = 3 Punkte', viewW / 2, midY + 70, 15, '#fff', 'center', 600);
+      text('Version ' + VERSION, viewW - 12, viewH - 14, 12, 'rgba(255,255,255,0.8)', 'right', 600);
     } else if (state === 'over') {
       text('AUTSCH!', viewW / 2, midY - 52, 44, '#ff6b6b');
       if (overMsg) text(overMsg, viewW / 2, midY - 14, 18, '#fff', 'center', 700);
